@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Dimensions, Button, Modal, View, Text, TouchableOpacity, Image, StyleSheet, Picker, ActivityIndicator } from 'react-native';
+import {Dimensions, Button, Modal, View, Text, TouchableOpacity, Image, StyleSheet, Picker, ActivityIndicator} from 'react-native';
 import HeaderContent from '../HeaderContent/HeaderContent'
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
@@ -142,16 +142,13 @@ export default class EtkinlikTakvimi extends React.Component {
         <HeaderContent navigation={this.props.navigation} />
         <View>
           <Text>TARİH SEÇ</Text>
-          <TouchableOpacity
-          onPress = {() => this.props.navigation.navigate('Haberler')}
-          >
-            <Text style={{backgroundColor:'red',color:'yellow'}}>HABERLER</Text>
-          </TouchableOpacity>
           <Picker
-            style={{ width: 150 }}
+            itemStyle={{color:'red'}}
+            style={{ width: 150,borderWidth:1,borderColor:'red'}}
             selectedValue={this.state.selectedMonth}
+            
             onValueChange={(Month) => this.setState({ selectedMonth: Month })}>
-            <Picker.Item label="Ocak" value="1" />
+            <Picker.Item label="Ocak" value="1"/>
             <Picker.Item label="Şubat" value="2" />
             <Picker.Item label="Mart" value="3" />
             <Picker.Item label="Nisan" value="4" />

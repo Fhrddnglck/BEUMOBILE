@@ -8,6 +8,25 @@ import {
     Platform,
 } from "react-native";
 
+class MenuItem extends Component {
+    render() {
+        return (
+            <TouchableOpacity
+                onPress={() => this.props.propsNav(this.props.name)}
+                style={styles.containerBottomItem}
+            >
+                <Image
+                    style={{ width: 20, height: 20 }}
+                    source={this.props.Mysrc}
+                />
+                <View style={styles.button}>
+        <Text style={styles.txtBottom}>{this.props.name}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+}
+
 export default class CustomComponent extends Component {
     constructor(props) {
         super(props);
@@ -23,141 +42,20 @@ export default class CustomComponent extends Component {
                         source={require('../src/images/beulogo-drawe.png')}
                     />
                 </View>
-                <View style={{marginTop:10,backgroundColor:'black',width:'85%',height:1,alignSelf:'center'}}></View>
+                <View style={{ marginTop: 10, backgroundColor: 'black', width: '85%', height: 1, alignSelf: 'center' }}></View>
                 <View style={styles.containerBottom}>
-                    <TouchableOpacity
-                        onPress={() => navigate('Anasayfa')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/drawer-home-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>Anasayfa</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigate('YemekListesi')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/food-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>Yemek Listesi</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                        onPress={() => navigate('Duyurular')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/commercial-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>Duyurular</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigate('AkademikTakvim')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/calendar-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>Akademik Takvim</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigate('TelefonRehberi')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/phoneMain-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>Telefon Rehberi</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigate('EtkinlikTakvimi')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 18, height: 18 }}
-                            source={require('../src/images/activity-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>Etkinlik Takvimi</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigate('Rimer')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/rimer-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>Rimer</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigate('Eposta')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/mail-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>E-posta</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigate('PersonelAra')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/icon-search.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>Personel Ara</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigate('ebys')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/ebys-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>EBYS</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => navigate('AkilliKart')}
-                        style={styles.containerBottomItem}
-                    >
-                        <Image
-                            style={{ width: 20, height: 20 }}
-                            source={require('../src/images/card-icon.png')}
-                        />
-                        <View style={styles.button}>
-                            <Text style={styles.txtBottom}>Akıllı Kart Para Yükleme</Text>
-                        </View>
-                    </TouchableOpacity>
+                     <MenuItem name='Anasayfa' Mysrc={require('../src/images/drawer-home-icon.png')} propsNav={navigate} />
+                     <MenuItem name='YemekListesi' Mysrc={require('../src/images/food-icon.png')} propsNav={navigate} />
+                     <MenuItem name='Duyurular' Mysrc={require('../src/images/commercial-icon.png')} propsNav={navigate} />
+                     <MenuItem name='AkademikTakvim' Mysrc={require('../src/images/calendar-icon.png')} propsNav={navigate} />
+                     <MenuItem name='TelefonRehberi' Mysrc={require('../src/images/phoneMain-icon.png')} propsNav={navigate} />
+                     <MenuItem name='EtkinlikTakvimi' Mysrc={require('../src/images/activity-icon.png')} propsNav={navigate} />
+                     <MenuItem name='Haberler' Mysrc={require('../src/images/news-drawer.png')} propsNav={navigate} />
+                     <MenuItem name='Rimer' Mysrc={require('../src/images/rimer-icon.png')} propsNav={navigate} />
+                     <MenuItem name='Eposta' Mysrc={require('../src/images/mail-icon.png')} propsNav={navigate} />
+                     <MenuItem name='PersonelAra' Mysrc={require('../src/images/icon-search.png')} propsNav={navigate} />
+                     <MenuItem name='ebys' Mysrc={require('../src/images/ebys-icon.png')} propsNav={navigate} />
+                     <MenuItem name='AkilliKart' Mysrc={require('../src/images/card-icon.png')} propsNav={navigate} />
                 </View>
             </View>
         );
@@ -169,8 +67,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#c2e8ff'
     },
-    containerBottom:{
-        marginTop:25,
+    containerBottom: {
+        marginTop: 25,
     },
     containertopRow: {
         marginTop: 10,
@@ -218,6 +116,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         borderBottomColor: '#E6FAFF',
         borderBottomWidth: 0.5,
-        marginTop:5
+        marginTop: 5
     }
 });
