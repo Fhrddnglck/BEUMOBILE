@@ -46,7 +46,6 @@ export default class Duyurular extends React.Component {
             .then((response) => response.text())
             .then((responseData) => rssParser.parse(responseData))
             .then((rss) => {
-                console.log(rss)
                 rss.items.forEach((value) => {
                     if(value.published[3]=='N'&&value.published[4]=='o'&&value.published[5]=='v'){
                         //TODO DATE CHANGE TURKISH FROM ENG
@@ -134,13 +133,8 @@ export default class Duyurular extends React.Component {
                             </TouchableOpacity>
                             </View>
                         </View>}
-
-
                     />
-
                 </View>
-
-
             </View>
         );
     }

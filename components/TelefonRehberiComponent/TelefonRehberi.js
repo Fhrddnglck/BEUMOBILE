@@ -5,8 +5,8 @@ import { TextInput, FlatList } from 'react-native-gesture-handler';
 
 var HTMLParser = require('fast-html-parser');
 
-var idariBirimLine = false;
 const colors = ['green','#81CFE0','red','orange']
+
 export default class RehberEkrani extends React.Component {
   constructor(props) {
     super(props);

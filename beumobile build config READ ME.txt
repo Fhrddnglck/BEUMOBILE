@@ -1,3 +1,4 @@
+cmd administrator aç
 C:\Program Files\Java\jdk-13.0.1\bin -> my-upload-key.store
 alias -> my-key-alias
 keystore pass : beumobile
