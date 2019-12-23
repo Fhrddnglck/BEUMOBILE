@@ -21,6 +21,7 @@ export default class EtkinlikTakvimi extends React.Component {
             currentHrefs: [],
             loadedURL: false,
             currentText: '',
+            dates : [],
         }
     }
     componentDidMount() {
@@ -44,11 +45,13 @@ export default class EtkinlikTakvimi extends React.Component {
     getDatas = (month, year) => {
         this.state.details.length = 0;
         this.state.datas.length = 0;
+        this.state.dates.length = 0;
         return fetch('https://w3.beun.edu.tr/arsiv/haberler/' + month + '/' + year + '/liste.html')
             .then((res) => res.text())
             .then((html) => {
                 var root = HTMLParser.parse(html);
                 root.querySelectorAll('a').forEach((value) => this.setState({ datas: [...this.state.datas, value.text] }));
+                root.querySelectorAll('.col-10').forEach((value)=>this.setState({dates:[...this.state.dates,value.text]}))
                 root.querySelectorAll('a').forEach((value) => this.setState({ details: [...this.state.details, 'https://w3.beun.edu.tr' + value.rawAttributes.href] }));
             })
 
@@ -170,6 +173,7 @@ export default class EtkinlikTakvimi extends React.Component {
                                 onPress={() => this.OpenModal(index)}
                             >
                                 <Text style={{ color: '#4479cf' }}>{item}</Text>
+                                <Text style={{fontSize:10,marginLeft:'auto'}}>{this.state.dates[index]}</Text>
                             </TouchableOpacity>
                         </View>}
                 />
@@ -187,7 +191,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'center',
         width: '100%',
-        height: 75
+        height: 100
     }
 })
 
