@@ -3,16 +3,33 @@ import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, Image, Style
 import HeaderContent from '../HeaderContent/HeaderContent'
 import { WebView } from 'react-native-webview'
 
+class MainButton extends React.Component {
+  render(){
+    return(
+      <TouchableOpacity style={styles.buttons}
+      onPress={() => this.props.nav(this.props.name)}
+    >
+      <Image
+        style={styles.buttonsImage}
+        source={this.props.mySrc}
+      />
+    </TouchableOpacity>
+
+    )
+  }
+}
+
 export default class AnaEkran extends React.Component {
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <ImageBackground
        style={{flex:1}}
        source={require('../../src/images/beu-back-2.png')}
        >
           <HeaderContent navigation={this.props.navigation} />
-          <View style={{ flex: 0.3, height: 15,marginTop:5,width:'100%' }} pointerEvents='none'>
+          <View style={{ flex: 0.25,marginTop:5,width:'90%',marginLeft:16}} pointerEvents='none'>
             <WebView
               source={{ uri: 'https://w3.beun.edu.tr' }}
               pointerEvents='none'
@@ -20,55 +37,12 @@ export default class AnaEkran extends React.Component {
             />
           </View>
           <View style={styles.buttonsBack}>
-            <TouchableOpacity style={styles.buttons}
-              onPress={() => this.props.navigation.navigate('YemekListesi')}
-            //Burda yine ()=> koymazsak otomatik çağırıyor böyle onpress daha sağlıklı çalışıyor
-            >
-              <Image
-                style={styles.buttonsImage}
-                source={require('../../src/images/main-food.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttons}
-              onPress={() => this.props.navigation.navigate('Duyurular')}
-            >
-              <Image
-                style={styles.buttonsImage}
-                source={require('../../src/images/main-anno.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttons}
-              onPress={() => this.props.navigation.navigate('AkademikTakvim')}
-            >
-              <Image
-                style={StyleSheet.flatten([styles.buttons,{width:65,height:65}])}
-                source={require('../../src/images/main-calen.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttons}
-              onPress={() => this.props.navigation.navigate('TelefonRehberi')}
-            >
-              <Image
-                style={styles.buttonsImage}
-                source={require('../../src/images/main-phone.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttons}
-              onPress={() => this.props.navigation.navigate('Eposta')}
-            >
-              <Image
-                style={StyleSheet.flatten([styles.buttons,{width:70,height:70}])}
-                source={require('../../src/images/main-letter.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttons}
-              onPress={() => this.props.navigation.navigate('PersonelAra')}
-            >
-              <Image
-                style={StyleSheet.flatten([styles.buttons,{width:60,height:60}])}
-                source={require('../../src/images/main-search.png')}
-              />
-            </TouchableOpacity>
+            <MainButton name='YemekListesi' nav = {navigate} mySrc = {require('../../src/images/main-food.png')}/>
+            <MainButton name='Duyurular' nav = {navigate} mySrc = {require('../../src/images/main-anno.png')}/>
+            <MainButton name='AkademikTakvim' nav = {navigate} mySrc = {require('../../src/images/main-calen.png')}/>
+            <MainButton name='TelefonRehberi' nav = {navigate} mySrc = {require('../../src/images/main-phone.png')}/>
+            <MainButton name='Eposta' nav = {navigate} mySrc = {require('../../src/images/main-letter.png')}/>
+            <MainButton name='PersonelAra' nav = {navigate} mySrc = {require('../../src/images/main-search.png')}/>
           </View>
       </ImageBackground>
     );
@@ -109,11 +83,8 @@ const styles = StyleSheet.create({
   },
   webViewStyle: {
     flex: 1,
-    position: 'absolute',
-    width: '89%',
-    height: 170,
     marginTop: -45,
-    marginLeft:20,
+    resizeMode:'cover'
   },
   buttonsImage: {
     width: 50,

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Dimensions, Button, Modal, View, Text, TouchableOpacity, Image, StyleSheet, Picker, ActivityIndicator } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, Image, StyleSheet, Picker, ActivityIndicator } from 'react-native';
 import HeaderContent from '../HeaderContent/HeaderContent'
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
-
+import CustomModel from '../CustomModel/CustomModel'
 
 
 var HTMLParser = require('fast-html-parser');
@@ -21,7 +21,7 @@ export default class EtkinlikTakvimi extends React.Component {
             currentHrefs: [],
             loadedURL: false,
             currentText: '',
-            dates : [],
+            dates: [],
         }
     }
     componentDidMount() {
@@ -51,17 +51,18 @@ export default class EtkinlikTakvimi extends React.Component {
             .then((html) => {
                 var root = HTMLParser.parse(html);
                 root.querySelectorAll('a').forEach((value) => this.setState({ datas: [...this.state.datas, value.text] }));
-                root.querySelectorAll('.col-10').forEach((value)=>this.setState({dates:[...this.state.dates,value.text]}))
+                root.querySelectorAll('.col-10').forEach((value) => this.setState({ dates: [...this.state.dates, value.text] }))
                 root.querySelectorAll('a').forEach((value) => this.setState({ details: [...this.state.details, 'https://w3.beun.edu.tr' + value.rawAttributes.href] }));
             })
 
     }
     OpenModal(myIndex) {
+        this.showModal();
         this.setState({
             currentText: '',
             currentHrefs: [],
         })
-        this.setState({ modalVisible: true, currentHref: this.state.details[myIndex] })
+        this.setState({ currentHref: this.state.details[myIndex] })
         return fetch(this.state.details[myIndex])
             .then((res) => res.text())
             .then((html) => {
@@ -73,9 +74,12 @@ export default class EtkinlikTakvimi extends React.Component {
                 })
             })
     }
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
-    }
+    showModal = () => {
+        this.setState({
+            modalVisible: !this.state.modalVisible
+        });
+    };
+
     _unitList = () => { //TODO REMOVE EMPTY ELEMENT IN ARRAY
         return (this.state.years.map((x, i) => { //TODO YEARS LIST
             return (<Picker.Item value={x} label={x} />)
@@ -90,7 +94,6 @@ export default class EtkinlikTakvimi extends React.Component {
         }))
     }
     render() {
-        const { navigate } = this.props.navigation;
         if (this.state.isLoading) {
             return (
                 <View>
@@ -101,34 +104,12 @@ export default class EtkinlikTakvimi extends React.Component {
         }
         return (
             <View style={styles.container}>
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisible}
-                >
-                    <View style={{ display: 'flex', flexDirection: 'row' }}>
-                        <Image
-                            style={{ width: 75, height: 75 }}
-                            source={require('../../src/images/beulogo-tabs.png')}
-                        />
-                        <TouchableOpacity
-
-                            style={{ width: 75, height: 75, marginLeft: 'auto' }}
-                            onPress={() => {
-                                this.setModalVisible(!this.state.modalVisible);
-                            }}>
-
-                            <Image
-                                style={{ width: 75, height: 75 }}
-                                source={require('../../src/images/check-close-icon.png')}
-                            />
-                        </TouchableOpacity>
-                    </View>
+                <CustomModel modalVisible={this.state.modalVisible} onClose={this.showModal}>
                     <ScrollView>
                         <Text>{this.state.currentText}</Text>
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{this.ImageArray()}</View>
                     </ScrollView>
-                </Modal>
+                </CustomModel>
                 <HeaderContent navigation={this.props.navigation} />
                 <View>
                     <Text>TARİH SEÇ</Text>
@@ -173,7 +154,7 @@ export default class EtkinlikTakvimi extends React.Component {
                                 onPress={() => this.OpenModal(index)}
                             >
                                 <Text style={{ color: '#4479cf' }}>{item}</Text>
-                                <Text style={{fontSize:10,marginLeft:'auto'}}>{this.state.dates[index]}</Text>
+                                <Text style={{ fontSize: 10, marginLeft: 'auto' }}>{this.state.dates[index]}</Text>
                             </TouchableOpacity>
                         </View>}
                 />
