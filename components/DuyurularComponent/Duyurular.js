@@ -1,7 +1,7 @@
 import React from 'react'
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, Image, Button, Alert, Modal, ScrollView,Animated } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, Image, Button, Alert, Modal, ScrollView, Animated } from 'react-native'
 import HeaderContent from '../HeaderContent/HeaderContent'
-
+import CustomModel from '../CustomModel/CustomModel'
 import * as rssParser from 'react-native-rss-parser'
 var HTMLParser = require('fast-html-parser');
 
@@ -16,17 +16,18 @@ export default class Duyurular extends React.Component {
             modalVisible: false,
             currentContent: ''
         }
-        this.handlePressIn = this.handlePressIn.bind(this);
     }
-    handlePressIn(){
+    handlePressIn = () => {
         console.log("Presss");
         //TODO MAKE ANIMATION
     }
-    setModalVisible(visible) {
-        this.setState({ modalVisible: visible });
-    }
+    showModal = () => {
+        this.setState({
+            modalVisible: !this.state.modalVisible
+        });
+    };
     openModal(index) {
-
+        this.showModal();
         return fetch(array[index])
             .then((res) => res.text())
             .then((html) => {
@@ -37,17 +38,13 @@ export default class Duyurular extends React.Component {
                 })
             })
     }
-    OpenModalAndSetModel(visible, index) {
-        this.setModalVisible(visible);
-        this.openModal(index);
-    }
     componentDidMount() {
         return fetch('https://w3.beun.edu.tr/rss')
             .then((response) => response.text())
             .then((responseData) => rssParser.parse(responseData))
             .then((rss) => {
                 rss.items.forEach((value) => {
-                    if(value.published[3]=='N'&&value.published[4]=='o'&&value.published[5]=='v'){
+                    if (value.published[3] == 'N' && value.published[4] == 'o' && value.published[5] == 'v') {
                         //TODO DATE CHANGE TURKISH FROM ENG
                     }
                     date.push(value.published.split('+0300'));
@@ -58,7 +55,7 @@ export default class Duyurular extends React.Component {
                     isLoading: false,
                     dataSource: rss.items
                 })
-            }).catch(error => { console.log('error:'+error) });
+            }).catch(error => { console.log('error:' + error) });
     }
     render() {
         if (this.state.isLoading) {
@@ -73,30 +70,7 @@ export default class Duyurular extends React.Component {
             <View style={styles.container}>
                 <HeaderContent navigation={this.props.navigation} />
                 <View style={styles.contentNav}>
-
-                    <Modal
-                        animationType="slide"
-                        transparent={false}
-                        visible={this.state.modalVisible}
-                    >
-                        <View style={{display:'flex',flexDirection:'row'}}>
-                            <Image
-                                style={{ width: 75, height: 75}}
-                                source={require('../../src/images/beulogo-tabs.png')}
-                            />
-                            <TouchableOpacity
-                                onPressIn={()=>this.handlePressIn()}
-                                style={{ width: 75, height: 75,marginLeft:'auto'}}
-                                onPress={() => {
-                                    this.setModalVisible(!this.state.modalVisible);
-                                }}>
-
-                                <Image
-                                    style={{ width: 75, height: 75 }}
-                                    source={require('../../src/images/check-close-icon.png')}
-                                />
-                            </TouchableOpacity>
-                        </View>
+                    <CustomModel modalVisible={this.state.modalVisible} onClose={this.showModal}>
 
                         <View style={{ marginTop: 22, backgroundColor: '#ffd4e1' }}>
                             <View style={{ alignItems: 'center' }}>
@@ -106,33 +80,30 @@ export default class Duyurular extends React.Component {
 
                             </View>
                         </View>
-                    </Modal>
-
-
-
+                    </CustomModel>
 
                     <FlatList
                         data={this.state.dataSource}
                         keyExtractor={({ id }, index) => index}
-                        renderItem={({ item, index }) => 
-                        <View style={{marginTop: 10, backgroundColor: colors[index%colors.length],flexDirection:'row' }}>
-                            <View style={{flex:0.5,justifyContent:'center',alignItems:'center'}}>
-                            <Image
-                            style={{ width: 30, height:30}}
-                            source={require('../../src/images/duyuru-icon-list.png')}
-                            />
-                            </View>
-                            <View style={{flex:3,flexDirection:'column'}}>
-                            <TouchableOpacity style={styles.listStyle} onPress={() => this.OpenModalAndSetModel(true, index)}>
-                                <View>
-                                <Text style={{ color: '#2060ba', textAlign: 'center',fontWeight:'bold' }}>{item.title}</Text>
+                        renderItem={({ item, index }) =>
+                            <View style={{ marginTop: 10, backgroundColor: colors[index % colors.length], flexDirection: 'row' }}>
+                                <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
+                                    <Image
+                                        style={{ width: 30, height: 30 }}
+                                        source={require('../../src/images/duyuru-icon-list.png')}
+                                    />
                                 </View>
-                                <View style={{marginTop:'auto',alignItems:'center'}}>
-                                <Text>{date[index]}</Text>
+                                <View style={{ flex: 3, flexDirection: 'column' }}>
+                                    <TouchableOpacity style={styles.listStyle} onPress={() => this.openModal(index)}>
+                                        <View>
+                                            <Text style={{ color: '#2060ba', textAlign: 'center', fontWeight: 'bold' }}>{item.title}</Text>
+                                        </View>
+                                        <View style={{ marginTop: 'auto', alignItems: 'center' }}>
+                                            <Text>{date[index]}</Text>
+                                        </View>
+                                    </TouchableOpacity>
                                 </View>
-                            </TouchableOpacity>
-                            </View>
-                        </View>}
+                            </View>}
                     />
                 </View>
             </View>
