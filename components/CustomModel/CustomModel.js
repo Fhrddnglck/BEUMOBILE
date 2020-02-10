@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, View, Image, TouchableOpacity,Text } from 'react-native'
+import { Modal, View, Image, TouchableOpacity, Text } from 'react-native'
 
 export default class CustomModel extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class CustomModel extends React.Component {
     render() {
         if (!this.props.modalVisible) { //IF MODALVISIBLE FALSE RETURN NULL
             return null;
-          }
+        }
         return (
             <Modal
                 animationType="slide"
