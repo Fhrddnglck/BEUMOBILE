@@ -112,8 +112,8 @@ export default class EtkinlikTakvimi extends React.Component {
                     </ScrollView>
                 </CustomModel>
                 <HeaderContent navigation={this.props.navigation} />
-                <View>
-                    <Text>TARİH SEÇ</Text>
+                <View style={{alignSelf:'center',alignItems:'center'}}>
+                <Text style={{fontSize:15}}>TARİH SEÇ</Text>
                     <Picker
                         itemStyle={{ color: 'red' }}
                         style={{ width: 150, borderWidth: 1, borderColor: 'red' }}

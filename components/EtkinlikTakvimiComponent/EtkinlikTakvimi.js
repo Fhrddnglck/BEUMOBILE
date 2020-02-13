@@ -122,8 +122,8 @@ export default class EtkinlikTakvimi extends React.Component {
         </CustomModel>
 
         <HeaderContent navigation={this.props.navigation} />
-        <View>
-          <Text>TARİH SEÇ</Text>
+        <View style={{alignSelf:'center',alignItems:'center'}}>
+          <Text style={{fontSize:15}}>TARİH SEÇ</Text>
           <Picker
             itemStyle={{color:'red'}}
             style={{ width: 150,borderWidth:1,borderColor:'red'}}
@@ -151,7 +151,7 @@ export default class EtkinlikTakvimi extends React.Component {
           </Picker>
           <TouchableOpacity
             onPress={() => this.getDatas(this.state.selectedMonth, this.state.selectedYears)}
-            style={{ width: 50, height: 50, justifyContent: 'center', alignItems: 'center',backgroundColor:'#52b3d9', borderRadius:180,marginBottom:15 }}
+            style={{ width: 50, height: 50, justifyContent: 'center', alignItems: 'center',backgroundColor:'#52b3d9', borderRadius:180,marginBottom:15}}
           >
               <Text style={{ fontSize: 25,color:'white' }}>>></Text>
           </TouchableOpacity>
