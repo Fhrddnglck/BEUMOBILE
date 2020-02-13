@@ -10,17 +10,18 @@ import {
 
 class MenuItem extends Component {
     render() {
+        const {navName,Mysrc,name}= this.props;
         return (
             <TouchableOpacity
-                onPress={() => this.props.propsNav(this.props.name)}
+                onPress={() => this.props.propsNav(navName)}
                 style={styles.containerBottomItem}
             >
                 <Image
                     style={{ width: 20, height: 20 }}
-                    source={this.props.Mysrc}
+                    source={Mysrc}
                 />
                 <View style={styles.button}>
-        <Text style={styles.txtBottom}>{this.props.name}</Text>
+        <Text style={styles.txtBottom}>{name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -44,18 +45,18 @@ export default class CustomComponent extends Component {
                 </View>
                 <View style={{ marginTop: 10, backgroundColor: 'black', width: '85%', height: 1, alignSelf: 'center' }}></View>
                 <View style={styles.containerBottom}>
-                     <MenuItem name='Anasayfa' Mysrc={require('../src/images/drawer-home-icon.png')} propsNav={navigate} />
-                     <MenuItem name='YemekListesi' Mysrc={require('../src/images/food-icon.png')} propsNav={navigate} />
-                     <MenuItem name='Duyurular' Mysrc={require('../src/images/commercial-icon.png')} propsNav={navigate} />
-                     <MenuItem name='AkademikTakvim' Mysrc={require('../src/images/calendar-icon.png')} propsNav={navigate} />
-                     <MenuItem name='TelefonRehberi' Mysrc={require('../src/images/phoneMain-icon.png')} propsNav={navigate} />
-                     <MenuItem name='EtkinlikTakvimi' Mysrc={require('../src/images/activity-icon.png')} propsNav={navigate} />
-                     <MenuItem name='Haberler' Mysrc={require('../src/images/news-drawer.png')} propsNav={navigate} />
-                     <MenuItem name='Rimer' Mysrc={require('../src/images/rimer-icon.png')} propsNav={navigate} />
-                     <MenuItem name='Eposta' Mysrc={require('../src/images/mail-icon.png')} propsNav={navigate} />
-                     <MenuItem name='PersonelAra' Mysrc={require('../src/images/icon-search.png')} propsNav={navigate} />
-                     <MenuItem name='ebys' Mysrc={require('../src/images/ebys-icon.png')} propsNav={navigate} />
-                     <MenuItem name='AkilliKart' Mysrc={require('../src/images/card-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='Anasayfa' name='Anasayfa' Mysrc={require('../src/images/drawer-home-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='YemekListesi' name='Yemek Listesi' Mysrc={require('../src/images/food-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='Duyurular' name='Duyurular' Mysrc={require('../src/images/commercial-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='AkademikTakvim' name='Akademik Takvim' Mysrc={require('../src/images/calendar-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='TelefonRehberi' name='Telefon Rehberi' Mysrc={require('../src/images/phoneMain-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='EtkinlikTakvimi' name='Etkinlik Takvimi' Mysrc={require('../src/images/activity-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='Haberler' name='Haberler' Mysrc={require('../src/images/news-drawer.png')} propsNav={navigate} />
+                     <MenuItem navName='Rimer' name='Rimer' Mysrc={require('../src/images/rimer-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='Eposta' name='E-posta' Mysrc={require('../src/images/mail-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='PersonelAra' name='Personel Ara' Mysrc={require('../src/images/icon-search.png')} propsNav={navigate} />
+                     <MenuItem navName='ebys' name='Ebys' Mysrc={require('../src/images/ebys-icon.png')} propsNav={navigate} />
+                     <MenuItem navName='AkilliKart' name='Akıllı Kart' Mysrc={require('../src/images/card-icon.png')} propsNav={navigate} />
                 </View>
             </View>
         );
