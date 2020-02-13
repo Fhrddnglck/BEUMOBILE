@@ -93,7 +93,7 @@ export default class EtkinlikTakvimi extends React.Component {
   };
   _unitList = () => { //TODO REMOVE EMPTY ELEMENT IN ARRAY
     return (this.state.years.map((x, i) => { //TODO YEARS LIST
-      return (<Picker.Item value={x} label={x} />)
+      return (<Picker.Item key={i} value={x} label={x} />)
     }))
   }
   render() {
@@ -158,9 +158,9 @@ export default class EtkinlikTakvimi extends React.Component {
         </View>
         <FlatList
           data={this.state.datas}
-          keyExtractor={({ id }, index) => index}
+          keyExtractor={({ id }, index) => index.toString()}
           renderItem={({ item, index }) =>
-            <View style={StyleSheet.flatten([styles.flatList,{backgroundColor:colors[index%colors.length]}])}>
+            <View key={index} style={StyleSheet.flatten([styles.flatList,{backgroundColor:colors[index%colors.length]}])}>
               <TouchableOpacity
                 onPress={() => this.OpenModal(index)}
               >

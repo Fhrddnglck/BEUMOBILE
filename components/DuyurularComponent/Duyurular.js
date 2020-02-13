@@ -83,8 +83,8 @@ export default class Duyurular extends React.Component {
                     </CustomModel>
 
                     <FlatList
-                        data={this.state.dataSource}
-                        keyExtractor={({ id }, index) => index}
+                        data={this.state.dataSource}            //tostring has rescue from cellvisualze
+                        keyExtractor={({ id }, index) => index.toString()}
                         renderItem={({ item, index }) =>
                             <View style={{ marginTop: 10, backgroundColor: colors[index % colors.length], flexDirection: 'row' }}>
                                 <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>

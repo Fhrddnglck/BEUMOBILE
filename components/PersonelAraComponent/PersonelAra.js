@@ -103,7 +103,7 @@ export default class PersonelAra extends React.Component {
         </View>
         <FlatList
           data={this.state.dataSource} //TODO CV NAVIGATION
-          keyExtractor={({ id }, index) => index}
+          keyExtractor={({ id }, index) => index.toString()}
           renderItem={({ item, index }) =>
             <View style={StyleSheet.flatten([styles.flatList,{backgroundColor:colors[index%colors.length]}])}>
               <Text style={{ color: 'black' }}>{item}</Text>

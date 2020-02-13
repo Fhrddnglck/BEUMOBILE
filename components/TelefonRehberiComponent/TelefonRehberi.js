@@ -49,9 +49,9 @@ export default class RehberEkrani extends React.Component {
         <View style={styles.contentNav}>
             <FlatList
               data={this.state.col1}
-              keyExtractor={({ id }, index) => id}
+              keyExtractor={({ id }, index) => index.toString()}
               renderItem={({ item,index }) => 
-              <View style={StyleSheet.flatten([styles.flatListStyle,{borderLeftColor:colors[index%colors.length]}])}>{item=='İdari Birimler'|| item=='Akademik Birimler'?<Text style={{fontSize:25,fontWeight:'bold'}}>{item}</Text>:<Text>{item}</Text>}</View>}
+              <View style={StyleSheet.flatten([styles.flatListStyle,{borderLeftColor:colors[index%colors.length]}])}>{item=='İdari Birimler'|| item=='Akademik Birimler'?<Text key={index} style={{fontSize:25,fontWeight:'bold'}}>{item}</Text>:<Text>{item}</Text>}</View>}
              
             />
         </View>

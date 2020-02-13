@@ -87,9 +87,9 @@ export default class YemekListesi extends React.Component {
                     </View>
                     <FlatList
                         data={this.state.dataSource}
-                        horizontal={true} //you may remove this item for vertical list
-                        keyExtractor={({ id }, index) => index}                                                                                                    //vertical '100%'
-                        renderItem={({ item, index }) => <View style={{backgroundColor: colors[index % colors.length], marginTop: 1, justifyContent: 'center', width: 300, alignSelf: 'center' }}><Text style={{ color: 'black' }}>{item}</Text></View>}
+                        horizontal={false} //you may remove this item for vertical list
+                        keyExtractor={({ id }, index) => index.toString()}                                                                                                    //vertical '100%'
+                        renderItem={({ item, index }) => <View style={{backgroundColor: colors[index % colors.length], marginTop: 1, justifyContent: 'center', width: '100%', alignSelf: 'center' }}><Text style={{ color: 'black' }}>{item}</Text></View>}
                     />
                 </View>
             </View>
