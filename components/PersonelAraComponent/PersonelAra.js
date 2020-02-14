@@ -35,7 +35,6 @@ export default class PersonelAra extends React.Component {
     this.setState({
       name: search
     })
-    console.log(encodeURI(this.state.name.toUpperCase().replace(/I/g,"İ")));
     
     return fetch('http://webapp.beun.edu.tr/namesearch?type=rehber&q=' + encodeURIComponent(this.state.name.toUpperCase().replace(/I/g,"İ")))
       .then((res) => res.text())

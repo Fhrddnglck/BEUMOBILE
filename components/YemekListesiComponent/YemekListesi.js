@@ -89,7 +89,7 @@ export default class YemekListesi extends React.Component {
                         data={this.state.dataSource}
                         horizontal={false} //you may remove this item for vertical list
                         keyExtractor={({ id }, index) => index.toString()}                                                                                                    //vertical '100%'
-                        renderItem={({ item, index }) => <View style={{backgroundColor: colors[index % colors.length], marginTop: 1, justifyContent: 'center', width: '100%', alignSelf: 'center' }}><Text style={{ color: 'black' }}>{item}</Text></View>}
+                        renderItem={({ item, index }) => <View style={{backgroundColor: colors[index % colors.length], marginTop: 25, justifyContent: 'center', width: '100%', alignSelf: 'center',shadowColor:'#000',shadowOffset:{width:0,height:8},shadowOpacity:0.46,shadowRadius:11.14,elevation:17 }}><Text style={{ color: 'black' }}>{item}</Text></View>}
                     />
                 </View>
             </View>
