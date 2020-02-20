@@ -99,7 +99,7 @@ export default class PersonelAra extends React.Component {
           <TextInput
             placeholder='...'
             onChangeText={(value) => this._getDatas(value)}
-            style={{ width: 200, borderColor: '#72a3f2', borderWidth: 1,borderRadius:15,backgroundColor:'#c2e8ff' }}
+            style={styles.inputStyle}
           />
         </View>
         <FlatList
@@ -123,8 +123,8 @@ export default class PersonelAra extends React.Component {
     if (detail[myIndex] != undefined) {
       return (
         <TouchableOpacity onPress={() => this.OpenModal(myIndex)}>
-          <View style={{alignItems:'center',width:'30%',alignSelf:'center',borderWidth:1.2,borderColor:'#385ae0',borderRadius:25}}>
-            <Text style={{color:'#385ae0',fontWeight:'bold',padding:10}}>ÖZGEÇMİŞ</Text>
+          <View style={{alignItems:'center',width:'30%',alignSelf:'center',borderWidth:1.2,borderRadius:25,borderColor:myIndex%2==0?'#39b36c':'#ffffff'}}>
+            <Text style={{color:myIndex%2==0?'#39b36c':'#ffffff',fontWeight:'bold',padding:10}}>ÖZGEÇMİŞ</Text>
           </View>
 
         </TouchableOpacity>
@@ -143,5 +143,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width:'100%',
     height: 170
+  },
+  inputStyle:{
+    shadowColor:'#000',
+    shadowOffset:{width:0,height:8},
+    shadowOpacity:0.46,
+    shadowRadius:11.14,
+    elevation:17,
+    marginTop:15,
+    width: 200, 
+    borderColor: '#cceded', 
+    borderWidth: 1,
+    borderRadius:15,
+    backgroundColor:'#e1eded'
   }
 });

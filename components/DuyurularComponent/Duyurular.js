@@ -44,12 +44,11 @@ export default class Duyurular extends React.Component {
             .then((responseData) => rssParser.parse(responseData))
             .then((rss) => {
                 rss.items.forEach((value) => {
-                    if (value.published[3] == 'N' && value.published[4] == 'o' && value.published[5] == 'v') {
-                        //TODO DATE CHANGE TURKISH FROM ENG
-                    }
-                    date.push(value.published.split('+0300'));
+                    //MORE MONTH WILL CHANGE
+                    date.push(value.published.replace('Feb','Subat').replace('May','Mayıs').replace('Jan','Ocak').replace('Dec','Aralık').split('+0300'));
                     array.push(value.links[0].url)
                 })
+                
 
                 this.setState({
                     isLoading: false,

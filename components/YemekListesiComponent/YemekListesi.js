@@ -8,7 +8,8 @@ let date = [];
 let newDatas = [];
 let slicedFirst = [];
 let slicedSecond = [];
-let colors = ['#ffffff', '#c2e8ff'];
+//old --> #c2e8ff
+let colors = ['#ffffff', '#e1eded'];
 export default class YemekListesi extends React.Component {
     constructor(props) {
         super(props);
