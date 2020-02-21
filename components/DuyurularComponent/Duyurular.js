@@ -71,7 +71,7 @@ export default class Duyurular extends React.Component {
                 <View style={styles.contentNav}>
                     <CustomModel modalVisible={this.state.modalVisible} onClose={this.showModal}>
 
-                        <View style={{ marginTop: 22, backgroundColor: '#ffd4e1' }}>
+                        <View style={{ marginTop: 22 }}>
                             <View style={{ alignItems: 'center' }}>
                                 <ScrollView>
                                     <Text style={{ fontSize: 15, textAlign: 'center' }}>{this.state.currentContent}</Text>

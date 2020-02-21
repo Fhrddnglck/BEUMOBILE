@@ -30,7 +30,7 @@ const DrawerNavigator = createDrawerNavigator({
     PersonelAra,
     ebys,
     AkilliKart,
-    Haberler //Drawer için değil Etkinlik Takviminden ulaşılıyor şuanda
+    Haberler
 },{contentComponent:props=><CustomComponent {...props}/>}
 )
 export default createAppContainer(DrawerNavigator)

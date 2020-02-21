@@ -107,8 +107,8 @@ export default class EtkinlikTakvimi extends React.Component {
             <View style={styles.container}>
                 <CustomModel modalVisible={this.state.modalVisible} onClose={this.showModal}>
                     <ScrollView>
-                        <Text>{this.state.currentText}</Text>
-                        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{this.ImageArray()}</View>
+                        <Text style={{fontSize:16}}>{this.state.currentText}</Text>
+                        <View style={{ flexDirection: 'row', flexWrap: 'wrap' ,justifyContent:'center',marginEnd:50}}>{this.ImageArray()}</View>
                     </ScrollView>
                 </CustomModel>
                 <HeaderContent navigation={this.props.navigation} />

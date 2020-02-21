@@ -29,7 +29,7 @@ export default class AnaEkran extends React.Component {
         source={require('../../src/images/beu-back-2.png')}
       >
         <HeaderContent navigation={this.props.navigation} />
-        <View style={{ flex: 0.24, marginTop: 5, width: '90%', marginLeft: 16 }} pointerEvents='none'>
+        <View style={{ flex: 0.21, marginTop: 5, width: '90%', marginLeft: 16 }} pointerEvents='none'>
           <WebView
             source={{ uri: 'https://w3.beun.edu.tr' }}
             pointerEvents='none'

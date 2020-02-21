@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, View, Image, TouchableOpacity, Text } from 'react-native'
+import { Modal, View, Image, TouchableOpacity, Text,StyleSheet } from 'react-native'
 
 export default class CustomModel extends React.Component {
     constructor(props) {
@@ -39,7 +39,7 @@ export default class CustomModel extends React.Component {
                         />
                     </TouchableOpacity>
                 </View>
-                <View>
+                <View style={styles.Container}>
                     {this.props.children}
                 </View>
             </Modal>
@@ -47,3 +47,16 @@ export default class CustomModel extends React.Component {
     }
 
 }
+const styles = StyleSheet.create({
+    Container:{
+        shadowColor:'#000',
+        shadowOffset:{width:0,height:8},
+        shadowOpacity:0.46,
+        shadowRadius:11.14,
+        elevation:17,
+        borderColor: '#cceded', 
+        borderWidth: 1,
+        borderRadius:15,
+        backgroundColor:'#e1eded'
+    }
+})
