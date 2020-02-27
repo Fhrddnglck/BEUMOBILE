@@ -8,6 +8,13 @@ let date = [];
 let newDatas = [];
 let slicedFirst = [];
 let slicedSecond = [];
+var nowadays;
+
+var EduChoose = {
+    BIRINCI : 'BIRINCI',
+    IKINCI : 'IKINCI',
+}
+
 //old --> #c2e8ff
 let colors = ['#ffffff', '#e1eded'];
 export default class YemekListesi extends React.Component {
@@ -15,7 +22,7 @@ export default class YemekListesi extends React.Component {
         super(props);
         this.state = {
             isLoading: true,
-            selectedButton: 'BIRINCI'
+            selectedButton: EduChoose.BIRINCI
         };
 
     }
@@ -48,6 +55,10 @@ export default class YemekListesi extends React.Component {
                     isLoading: false,
                     dataSource: slicedFirst,
                 })
+                var d = new Date();
+                nowadays = d.getDate();
+                //nowadays = date[18].childNodes[0].text.toString().slice(0,2);
+                console.log(nowadays);
             }).catch((error) => {
                 console.log(error);
             })
@@ -68,29 +79,48 @@ export default class YemekListesi extends React.Component {
                     <HeaderContent navigation={this.props.navigation} />
                     <Text style={{ textAlign: 'center', fontSize: 25 }}>{this.state.myText}</Text>
                     <View style={styles.chooseList}>
-                        <TouchableOpacity onPress={() => this.checkSelectedButton(true, 'BIRINCI')}
+                        <TouchableOpacity onPress={() => this.checkSelectedButton(true, EduChoose.BIRINCI)}
                             style={{
-                                backgroundColor: this.state.selectedButton === 'BIRINCI' ? '#72a3f2' : 'white',
+                                backgroundColor: this.state.selectedButton === EduChoose.BIRINCI ? '#72a3f2' : 'white',
                                 alignItems: 'center',
                                 width: 200
                             }}>
-                            <Text style={StyleSheet.flatten([styles.buttonText,{color:this.state.selectedButton==='BIRINCI'?'white':'#1186bd',fontSize:this.state.selectedButton==='BIRINCI'?25:15}])}>I. Öğretim</Text>
+                            <Text style={StyleSheet.flatten([styles.buttonText, { color: this.state.selectedButton === EduChoose.BIRINCI ? 'white' : '#1186bd', fontSize: this.state.selectedButton === EduChoose.BIRINCI ? 25 : 15 }])}>I. Öğretim</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.checkSelectedButton(false, 'IKINCI')} 
-                        style={{
-                            backgroundColor: this.state.selectedButton === 'IKINCI' ? '#72a3f2' : 'white',
-                            alignItems: 'center',
-                            
-                            width: 200
-                        }}>
-                            <Text style={StyleSheet.flatten([styles.buttonText,{color:this.state.selectedButton==='IKINCI'?'white':'#1186bd',fontSize:this.state.selectedButton==='IKINCI'?25:15}])}>II. Öğretim</Text>
+                        <TouchableOpacity onPress={() => this.checkSelectedButton(false, EduChoose.IKINCI)}
+                            style={{
+                                backgroundColor: this.state.selectedButton === EduChoose.IKINCI ? '#72a3f2' : 'white',
+                                alignItems: 'center',
+
+                                width: 200
+                            }}>
+                            <Text style={StyleSheet.flatten([styles.buttonText, { color: this.state.selectedButton === EduChoose.IKINCI ? 'white' : '#1186bd', fontSize: this.state.selectedButton === EduChoose.IKINCI ? 25 : 15 }])}>II. Öğretim</Text>
                         </TouchableOpacity>
                     </View>
                     <FlatList
                         data={this.state.dataSource}
                         horizontal={false} //you may remove this item for vertical list
                         keyExtractor={({ id }, index) => index.toString()}                                                                                                    //vertical '100%'
-                        renderItem={({ item, index }) => <View style={{backgroundColor: colors[index % colors.length], marginTop: 25, justifyContent: 'center', width: '100%', alignSelf: 'center',shadowColor:'#000',shadowOffset:{width:0,height:8},shadowOpacity:0.46,shadowRadius:11.14,elevation:17 }}><Text style={{ color: 'black' }}>{item}</Text></View>}
+                        renderItem=
+                        {({ item, index }) =>
+                            <View
+                                style={{
+                                    backgroundColor: date[index].childNodes[0].text.slice(0, 2) == nowadays ? '#ff5d52' : colors[index % colors.length] ,
+                                    marginTop: 25,
+                                    justifyContent: 'center',
+                                    width: '100%',
+                                    alignSelf: 'center',
+                                    shadowColor: '#000',
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 8
+                                    },
+                                    shadowOpacity: 0.46,
+                                    shadowRadius: 11.14,
+                                    elevation: 17
+                                }}>
+                                <Text style={{ color: 'black' }}>{item}</Text>
+                            </View>}
                     />
                 </View>
             </View>
@@ -114,8 +144,8 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         marginBottom: 10,
-        borderWidth:0.5,
-        borderColor:'#1186bd'
+        borderWidth: 0.5,
+        borderColor: '#1186bd'
     },
     listButtonLeft: {
         backgroundColor: '#1186bd',
@@ -138,7 +168,4 @@ const styles = StyleSheet.create({
     contentNav: {
         flex: 4,
     },
-    flatList: {
-
-    }
 })
