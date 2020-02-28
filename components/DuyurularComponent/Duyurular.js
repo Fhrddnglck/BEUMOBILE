@@ -19,6 +19,7 @@ export default class Duyurular extends React.Component {
     }
     handlePressIn = () => {
         console.log("Presss");
+        console.log('dsadsa')
         //TODO MAKE ANIMATION
     }
     showModal = () => {
