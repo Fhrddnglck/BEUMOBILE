@@ -22,6 +22,7 @@ export default class Duyurular extends React.Component {
             loadedURL: false,
             currentImageURL: '',
             currentText: '',
+            currentHeader : '',
             dates: [],
         }
     }
@@ -58,17 +59,17 @@ export default class Duyurular extends React.Component {
     }
     OpenModal(myIndex) {
         this.showModal()
-        console.log(this.state.details[myIndex])
         this.setState({ currentText: '' })
         return fetch(this.state.details[myIndex])
             .then(res => res.text())
             .then(html => {
                 var root = HTMLParser.parse(html)
-                var yazi = root.querySelector('#anaicerik').text
+                var baslik  = root.querySelector('#anaicerik').childNodes[1].text
+                var yazi = root.querySelector('#anaicerik').text.replace(baslik,'')
                 this.setState({
-                    currentText: yazi
+                    currentText: yazi,
+                    currentHeader:baslik
                 })
-                console.log(yazi)
             })
 
     }
@@ -96,7 +97,8 @@ export default class Duyurular extends React.Component {
             <View style={styles.container}>
                 <CustomModel modalVisible={this.state.modalVisible} onClose={this.showModal}>
                     <ScrollView>
-                        <Text>{this.state.currentText}</Text>
+                        <Text style={{fontWeight:'bold',fontSize:25,textAlign:'center'}}>{this.state.currentHeader}</Text>
+                        <Text style={{textAlign:'center'}}>{this.state.currentText}</Text>
                     </ScrollView>
                 </CustomModel>
 
