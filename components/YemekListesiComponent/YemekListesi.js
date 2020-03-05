@@ -1,14 +1,16 @@
 import React from 'react'
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView, Image, FlatList } from 'react-native'
 import HeaderContent from '../HeaderContent/HeaderContent'
+import { parse } from 'fast-html-parser';
 
 var HTMLParser = require('fast-html-parser');
 let sources = [];
 let date = [];
 let newDatas = [];
-let slicedFirst = [];
-let slicedSecond = [];
 var nowadays;
+
+let firstList = [];
+let secondList = [];
 
 var EduChoose = {
     BIRINCI : 'BIRINCI',
@@ -29,12 +31,12 @@ export default class YemekListesi extends React.Component {
     checkSelectedButton(value, userType) {
         if (value) {
             this.setState({
-                dataSource: slicedFirst,
+                dataSource: firstList,
                 selectedButton: userType
             })
         } else {
             this.setState({
-                dataSource: slicedSecond,
+                dataSource: secondList,
                 selectedButton: userType
             })
         }
@@ -49,16 +51,22 @@ export default class YemekListesi extends React.Component {
                 for (var i = 0; i < sources.length; i++) {
                     newDatas.push('                                ' + date[i].text + sources[i].text)
                 }
-                slicedFirst = newDatas.slice(0, sources.length / 2);
-                slicedSecond = newDatas.slice(sources.length / 2, sources.length);
-                this.setState({
-                    isLoading: false,
-                    dataSource: slicedFirst,
-                })
                 var d = new Date();
                 nowadays = d.getDate();
                 //nowadays = date[18].childNodes[0].text.toString().slice(0,2);
-                console.log(nowadays);
+                let slicedFirst = newDatas.slice(0, sources.length / 2);
+                let slicedSecond = newDatas.slice(sources.length / 2, sources.length);
+                slicedFirst.forEach((value,index)=>{
+                    var deneme  = parseInt(value.replace(/\s/g, '').slice(0,2))
+                    if(deneme>=nowadays){
+                        firstList.push(value)
+                        secondList.push(slicedSecond[index])
+                    }
+                })
+                this.setState({
+                    isLoading: false,
+                    dataSource: firstList,
+                })
             }).catch((error) => {
                 console.log(error);
             })
@@ -105,7 +113,7 @@ export default class YemekListesi extends React.Component {
                         {({ item, index }) =>
                             <View
                                 style={{
-                                    backgroundColor: date[index].childNodes[0].text.slice(0, 2) == nowadays ? '#ff5d52' : colors[index % colors.length] ,
+                                    backgroundColor: index==0 ? '#ff5d52' : colors[index % colors.length] ,
                                     marginTop: 25,
                                     justifyContent: 'center',
                                     width: '100%',

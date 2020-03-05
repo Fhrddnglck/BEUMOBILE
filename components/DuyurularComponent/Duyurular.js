@@ -48,6 +48,7 @@ export default class Duyurular extends React.Component {
         this.state.details.length = 0;
         this.state.datas.length = 0;
         this.state.dates.length = 0;
+        this.setState({isLoading:true})
         return fetch('https://w3.beun.edu.tr/arsiv/duyurular/' + month + '/' + year + '/liste.html')
             .then((res) => res.text())
             .then((html) => {
@@ -55,7 +56,7 @@ export default class Duyurular extends React.Component {
                 root.querySelectorAll('a').forEach((value) => this.setState({ datas: [...this.state.datas, value.text] }))
                 root.querySelectorAll('.col-10').forEach((value) => this.setState({ dates: [...this.state.dates, value.text] }))
                 root.querySelectorAll('a').forEach((value) => this.setState({ details: [...this.state.details, 'https://w3.beun.edu.tr' + value.rawAttributes.href] }))
-            })
+            }).then(this.setState({isLoading:false}))
     }
     OpenModal(myIndex) {
         this.showModal()

@@ -53,7 +53,7 @@ export default class EtkinlikTakvimi extends React.Component {
                 root.querySelectorAll('a').forEach((value) => this.setState({ datas: [...this.state.datas, value.text] }));
                 root.querySelectorAll('.col-10').forEach((value) => this.setState({ dates: [...this.state.dates, value.text] }))
                 root.querySelectorAll('a').forEach((value) => this.setState({ details: [...this.state.details, 'https://w3.beun.edu.tr' + value.rawAttributes.href] }));
-            })
+            }).then(this.setState({isLoading:false}))
 
     }
     OpenModal(myIndex) {
