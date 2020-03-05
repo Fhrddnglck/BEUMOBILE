@@ -102,10 +102,9 @@ export default class Duyurular extends React.Component {
 
                 <HeaderContent navigation={this.props.navigation} />
                 <View style={{ alignSelf: 'center', alignItems: 'center' }}>
-                    <Text style={{ fontSize: 15 }}>TARİH SEÇ</Text>
+                    <Text style={{ fontSize: 15,fontWeight:'bold',marginTop:5 }}>TARİH SEÇ</Text>
                     <Picker
-                        itemStyle={{ color: 'red' }}
-                        style={{ width: 150, borderWidth: 1, borderColor: 'red' }}
+                        style={{ width: 150}}
                         selectedValue={this.state.selectedMonth}
 
                         onValueChange={(Month) => this.setState({ selectedMonth: Month })}>
@@ -151,7 +150,7 @@ export default class Duyurular extends React.Component {
                             style={{height:'100%'}}
                                 onPress={() => this.OpenModal(index)}
                             >
-                                <Text style={{ color: '#4479cf' }}>{item}</Text>
+                                <Text style={{ color: '#4479cf',textAlign:'center'}}>{item}</Text>
                                 <Text style={{ fontSize: 10, marginLeft: 'auto',marginTop:'auto' }}>{this.state.dates[index]}</Text>
                             </TouchableOpacity>
                             </View>
@@ -181,12 +180,12 @@ const styles = StyleSheet.create({
         marginTop: 15
     },
     buttonStyle : {
-        width: 50, 
-        height: 50, 
+        width: 81, 
+        height: 49, 
         justifyContent: 'center', 
         alignItems: 'center',
-        backgroundColor: '#52b3d9', 
-        borderRadius: 180, 
+        backgroundColor: '#52b3d9',
+        borderRadius:8,
         marginBottom: 15,
         shadowColor: 'black',
         shadowOffset: { width: 8, height: 8 },
