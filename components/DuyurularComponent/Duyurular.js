@@ -1,63 +1,86 @@
-import React from 'react'
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList, ActivityIndicator, Image, Button, Alert, Modal, ScrollView, Animated } from 'react-native'
+import * as React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Picker, ActivityIndicator, ScrollView,Image} from 'react-native';
 import HeaderContent from '../HeaderContent/HeaderContent'
+import { FlatList } from 'react-native-gesture-handler';
 import CustomModel from '../CustomModel/CustomModel'
-import * as rssParser from 'react-native-rss-parser'
-var HTMLParser = require('fast-html-parser');
 
-let array = [];
-let date = [];
-let colors = ['#ffffff', '#edebeb'];
+
+var HTMLParser = require('fast-html-parser');
+let colors = ['#ffffff', '#c2e8ff'];
 export default class Duyurular extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectedMonth: 1,
+            years: [],
+            selectedYears: '2019',
+            datas: [],
+            details: [],
             isLoading: true,
             modalVisible: false,
-            currentContent: ''
+            currentHref: '',
+            loadedURL: false,
+            currentImageURL: '',
+            currentText: '',
+            dates: [],
         }
     }
-    handlePressIn = () => {
-        console.log("Presss");
-        console.log('dsadsa')
-        console.log('chapter2')
-        console.log('chapter_new')
-        //TODO MAKE ANIMATION
+    componentDidMount() {
+        return fetch('https://w3.beun.edu.tr/tum-duyurular.html')
+            .then(res => res.text())
+            .then(html => {
+                var root = HTMLParser.parse(html);
+                root.querySelector('#icerikdiv').querySelector('#yilsecim').querySelectorAll('option').forEach((values) => { this.setState({ years: [...this.state.years, values.text] }) });
+                var d = new Date();
+                var m = d.getMonth() + 1;
+                var y = d.getFullYear();
+                this.getDatas(m, y);
+                this.setState({
+                    isLoading: false
+                })
+            }
+            )
+
+    }
+
+    getDatas = (month, year) => {
+        this.state.details.length = 0;
+        this.state.datas.length = 0;
+        this.state.dates.length = 0;
+        return fetch('https://w3.beun.edu.tr/arsiv/duyurular/' + month + '/' + year + '/liste.html')
+            .then((res) => res.text())
+            .then((html) => {
+                var root = HTMLParser.parse(html);
+                root.querySelectorAll('a').forEach((value) => this.setState({ datas: [...this.state.datas, value.text] }))
+                root.querySelectorAll('.col-10').forEach((value) => this.setState({ dates: [...this.state.dates, value.text] }))
+                root.querySelectorAll('a').forEach((value) => this.setState({ details: [...this.state.details, 'https://w3.beun.edu.tr' + value.rawAttributes.href] }))
+            })
+    }
+    OpenModal(myIndex) {
+        this.showModal()
+        console.log(this.state.details[myIndex])
+        this.setState({ currentText: '' })
+        return fetch(this.state.details[myIndex])
+            .then(res => res.text())
+            .then(html => {
+                var root = HTMLParser.parse(html)
+                var yazi = root.querySelector('#anaicerik').text
+                this.setState({
+                    currentText: yazi
+                })
+                console.log(yazi)
+            })
+
     }
     showModal = () => {
         this.setState({
             modalVisible: !this.state.modalVisible
         });
     };
-    openModal(index) {
-        this.showModal();
-        return fetch(array[index])
-            .then((res) => res.text())
-            .then((html) => {
-                var root = HTMLParser.parse(html);
-                var yazi = root.querySelector('#anaicerik').text
-                this.setState({
-                    currentContent: yazi
-                })
-            })
-    }
-    componentDidMount() {
-        return fetch('https://w3.beun.edu.tr/rss')
-            .then((response) => response.text())
-            .then((responseData) => rssParser.parse(responseData))
-            .then((rss) => {
-                rss.items.forEach((value) => {
-                    //MORE MONTH WILL CHANGE
-                    date.push(value.published.replace('Feb','Subat').replace('May','Mayıs').replace('Jan','Ocak').replace('Dec','Aralık').split('+0300'));
-                    array.push(value.links[0].url)
-                })
-                
-
-                this.setState({
-                    isLoading: false,
-                    dataSource: rss.items
-                })
-            }).catch(error => { console.log('error:' + error) });
+    _unitList = () => { //TODO REMOVE EMPTY ELEMENT IN ARRAY
+        return (this.state.years.map((x, i) => { //TODO YEARS LIST
+            return (<Picker.Item key={i} value={x} label={x} />)
+        }))
     }
     render() {
         if (this.state.isLoading) {
@@ -68,46 +91,72 @@ export default class Duyurular extends React.Component {
                 </View>
             )
         }
+
         return (
             <View style={styles.container}>
+                <CustomModel modalVisible={this.state.modalVisible} onClose={this.showModal}>
+                    <ScrollView>
+                        <Text>{this.state.currentText}</Text>
+                    </ScrollView>
+                </CustomModel>
+
                 <HeaderContent navigation={this.props.navigation} />
-                <View style={styles.contentNav}>
-                    <CustomModel modalVisible={this.state.modalVisible} onClose={this.showModal}>
+                <View style={{ alignSelf: 'center', alignItems: 'center' }}>
+                    <Text style={{ fontSize: 15 }}>TARİH SEÇ</Text>
+                    <Picker
+                        itemStyle={{ color: 'red' }}
+                        style={{ width: 150, borderWidth: 1, borderColor: 'red' }}
+                        selectedValue={this.state.selectedMonth}
 
-                        <View style={{ marginTop: 22 }}>
-                            <View style={{ alignItems: 'center' }}>
-                                <ScrollView>
-                                    <Text style={{ fontSize: 15, textAlign: 'center' }}>{this.state.currentContent}</Text>
-                                </ScrollView>
-
-                            </View>
-                        </View>
-                    </CustomModel>
-
-                    <FlatList
-                        data={this.state.dataSource}            //tostring has rescue from cellvisualze
-                        keyExtractor={({ id }, index) => index.toString()}
-                        renderItem={({ item, index }) =>
-                            <View style={{ marginTop: 10, backgroundColor: colors[index % colors.length], flexDirection: 'row' }}>
-                                <View style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center' }}>
-                                    <Image
-                                        style={{ width: 30, height: 30 }}
-                                        source={require('../../src/images/duyuru-icon-list.png')}
-                                    />
-                                </View>
-                                <View style={{ flex: 3, flexDirection: 'column' }}>
-                                    <TouchableOpacity style={styles.listStyle} onPress={() => this.openModal(index)}>
-                                        <View>
-                                            <Text style={{ color: '#2060ba', textAlign: 'center', fontWeight: 'bold' }}>{item.title}</Text>
-                                        </View>
-                                        <View style={{ marginTop: 'auto', alignItems: 'center' }}>
-                                            <Text>{date[index]}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>}
-                    />
+                        onValueChange={(Month) => this.setState({ selectedMonth: Month })}>
+                        <Picker.Item label="Ocak" value="1" />
+                        <Picker.Item label="Şubat" value="2" />
+                        <Picker.Item label="Mart" value="3" />
+                        <Picker.Item label="Nisan" value="4" />
+                        <Picker.Item label="Mayıs" value="5" />
+                        <Picker.Item label="Haziran" value="6" />
+                        <Picker.Item label="Temmuz" value="7" />
+                        <Picker.Item label="Ağustos" value="8" />
+                        <Picker.Item label="Eylül" value="9" />
+                        <Picker.Item label="Ekim" value="10" />
+                        <Picker.Item label="Kasım" value="11" />
+                        <Picker.Item label="Aralık" value="12" />
+                    </Picker>
+                    <Picker
+                        style={{ width: 150 }}
+                        selectedValue={this.state.selectedYears}
+                        onValueChange={(Years) => this.setState({ selectedYears: Years })}>
+                        {this._unitList()}
+                    </Picker>
+                    <TouchableOpacity
+                        onPress={() => this.getDatas(this.state.selectedMonth, this.state.selectedYears)}
+                        style={styles.buttonStyle}
+                    >
+                        <Text style={{ fontSize: 25, color: 'white' }}>>></Text>
+                    </TouchableOpacity>
                 </View>
+                <FlatList
+                    data={this.state.datas}
+                    keyExtractor={({ id }, index) => index.toString()}
+                    renderItem={({ item, index }) =>
+                        <View key={index} style={StyleSheet.flatten([styles.flatList, { backgroundColor: colors[index % colors.length] }])}>
+                            <View  style={{ flex: 0.5, justifyContent: 'center', alignItems: 'center'}}>
+                            <Image
+                                style={{ width: 30, height: 30 }}
+                                source={require('../../src/images/duyuru-icon-list.png')}
+                            />
+                            </View>
+                            <View style={{ flex: 3, flexDirection: 'column'}}>
+                            <TouchableOpacity
+                            style={{height:'100%'}}
+                                onPress={() => this.OpenModal(index)}
+                            >
+                                <Text style={{ color: '#4479cf' }}>{item}</Text>
+                                <Text style={{ fontSize: 10, marginLeft: 'auto',marginTop:'auto' }}>{this.state.dates[index]}</Text>
+                            </TouchableOpacity>
+                            </View>
+                        </View>}
+                />
             </View>
         );
     }
@@ -117,21 +166,36 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    text: {
-        color: '#161924',
-        fontSize: 20,
-        fontWeight: '500'
-    },
-    contentNav: {
-        flex: 4
-    },
-    headerNav: {
-        flexDirection: 'row',
+    flatList: {
+        backgroundColor: 'grey',
+        justifyContent: 'center',
+        alignSelf: 'center',
         width: '100%',
-        flex: 1
+        height: 100,
+        flexDirection:'row',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.46,
+        shadowRadius: 11.14,
+        elevation: 17,
+        marginTop: 15
     },
-    listStyle: {
-        height: 100
+    buttonStyle : {
+        width: 50, 
+        height: 50, 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        backgroundColor: '#52b3d9', 
+        borderRadius: 180, 
+        marginBottom: 15,
+        shadowColor: 'black',
+        shadowOffset: { width: 8, height: 8 },
+        shadowOpacity: 0.46,
+        shadowRadius: 11.14,
+        elevation: 17,
     }
-
 })
+
+
+
+
