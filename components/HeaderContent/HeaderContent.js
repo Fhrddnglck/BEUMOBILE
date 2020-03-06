@@ -21,7 +21,7 @@ export default class HeaderContent extends React.Component {
     render() {
         const spin = this.spinValue.interpolate({
             inputRange:[0,1],
-            outputRange:['0deg','180deg']
+            outputRange:['0deg','360deg']
         })
         return (
             <View style={styles.headerNav}>
@@ -29,7 +29,7 @@ export default class HeaderContent extends React.Component {
                     style={{ width: 60, height: 60, marginLeft: 5, marginTop: 5 }}
                     source={require('../../src/images/beulogo-tabs.png')}
                 />
-                <Text style={{fontSize:25,marginLeft:'auto',alignSelf:'center'}}>ZBEÜ<Text style={{fontSize:30,alignSelf:'center',fontWeight:'bold',color:'#72a3f2'}}>MOBİL</Text></Text>
+                <Text style={{fontSize:25,marginLeft:'auto',alignSelf:'center',color:'#2e2322',textShadowColor:'black',textShadowOffset:{height:1},textShadowRadius:5}}>ZBEÜ<Text style={{fontSize:30,alignSelf:'center',fontWeight:'bold',color:'#72a3f2'}}>MOBİL</Text></Text>
                 <TouchableOpacity
                     style={{ width: '15%', height: '50%', marginLeft: 'auto' }}
                     onPress={this.props.navigation.openDrawer}
@@ -37,8 +37,8 @@ export default class HeaderContent extends React.Component {
                     
                 >
                     <Animated.Image
-                        style={{ width: 50, height: 50 , transform:[{rotate:spin}]}}
-                        source={require('../../src/images/menu-beu.png')}
+                        style={{ width: 50, height: 50, transform:[{rotate:spin}],marginTop:5}}
+                        source={require('../../src/images/BUTTON.png')}
                     />
 
                 </TouchableOpacity>
