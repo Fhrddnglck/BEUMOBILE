@@ -5,13 +5,16 @@ import HeaderContent from '../HeaderContent/HeaderContent'
 
 
 export default class Rimer extends React.Component {
+
+
   render() {
     return (
       <View style={styles.container}>
-        <HeaderContent navigation={this.props.navigation}/>
+        <HeaderContent navigation={this.props.navigation} />
         <WebView
-          source={{ uri: 'http://webapp.beun.edu.tr/iletisimformu/rimer' }}
-          style={{flex:2,marginBottom:-160}}
+          renderLoading={true}
+          source={{ uri: 'https://webapp.beun.edu.tr/iletisimformu/rimer' }}
+          style={{ flex: 1, marginBottom: -160 }}
         />
       </View>
 
@@ -20,9 +23,9 @@ export default class Rimer extends React.Component {
 }
 
 const styles = StyleSheet.create({
-container:{
-  flex:1
-}
+  container: {
+    flex: 1
+  }
 
 });
 

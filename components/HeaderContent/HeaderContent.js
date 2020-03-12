@@ -12,7 +12,7 @@ export default class HeaderContent extends React.Component {
         Animated.timing(
             this.spinValue,{
                 toValue:1, //TARGET POSITION VALUE 
-                duration:100, // TIMING
+                duration:360, // TIMING
                 easing:Easing.linear, //LINEAR shape
                 useNativeDriver:true //best performance
             }
@@ -31,13 +31,13 @@ export default class HeaderContent extends React.Component {
                 />
                 <Text style={{fontSize:25,marginLeft:'auto',alignSelf:'center',color:'#2e2322',textShadowColor:'black',textShadowOffset:{height:1},textShadowRadius:5}}>ZBEÜ<Text style={{fontSize:30,alignSelf:'center',fontWeight:'bold',color:'#72a3f2'}}>MOBİL</Text></Text>
                 <TouchableOpacity
-                    style={{ width: '15%', height: '50%', marginLeft: 'auto' }}
+                    style={{marginLeft: 'auto'}}
                     onPress={this.props.navigation.openDrawer}
                     onPressIn = {()=>this.spin()}
                     
                 >
                     <Animated.Image
-                        style={{ width: 50, height: 50, transform:[{rotate:spin}],marginTop:5}}
+                        style={{ width: 60, height: 60, transform:[{rotate:spin}],marginTop:5}}
                         source={require('../../src/images/BUTTON.png')}
                     />
 

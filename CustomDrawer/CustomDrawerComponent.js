@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         color: 'black',
         fontSize: 15,
-        fontWeight: '100'
+        fontWeight:'bold'
     },
     imageTopRow: {
         height: 110,
