@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.beumobile"
+        applicationId "com.zbeu.beumobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -144,11 +144,11 @@ android {
     }
     signingConfigs {
         release {
-            if (project.hasProperty('my-upload-key.keystore')) {
-                storeFile file(my-upload-key.keystore)
-                storePassword beumobile
-                keyAlias my-key-alias
-                keyPassword beumobile
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
             }
         }
         debug {
@@ -166,7 +166,6 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
             signingConfig signingConfigs.release
-            signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

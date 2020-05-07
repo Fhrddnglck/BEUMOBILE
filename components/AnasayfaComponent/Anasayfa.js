@@ -13,6 +13,7 @@ class MainButton extends React.Component {
           style={styles.buttonsImage}
           source={this.props.mySrc}
         />
+        <Text style={{fontFamily:'sans-serif-light',color:'#72a3f2',fontSize:12,marginTop:4}}>{this.props.textname}</Text>
       </TouchableOpacity>
 
     )
@@ -37,12 +38,12 @@ export default class AnaEkran extends React.Component {
           />
         </View> */}
         <View style={styles.buttonsBack}>
-          <MainButton name='YemekListesi' nav={navigate} mySrc={require('../../src/images/main-food.png')} />
-          <MainButton name='Duyurular' nav={navigate} mySrc={require('../../src/images/main-anno.png')} />
-          <MainButton name='AkademikTakvim' nav={navigate} mySrc={require('../../src/images/main-calen.png')} />
-          <MainButton name='TelefonRehberi' nav={navigate} mySrc={require('../../src/images/main-phone.png')} />
-          <MainButton name='Eposta' nav={navigate} mySrc={require('../../src/images/main-letter.png')} />
-          <MainButton name='PersonelAra' nav={navigate} mySrc={require('../../src/images/main-search.png')} />
+          <MainButton textname='Haberler' name='Haberler' nav={navigate} mySrc={require('../../src/images/main-news.png')} />
+          <MainButton textname='Duyurular' name='Duyurular' nav={navigate} mySrc={require('../../src/images/main-anno.png')} />
+          <MainButton textname='Telefon Rehberi' name='TelefonRehberi' nav={navigate} mySrc={require('../../src/images/main-phone.png')} />
+          <MainButton textname='Akademik Takvim' name='AkademikTakvim' nav={navigate} mySrc={require('../../src/images/main-calen.png')} />
+          <MainButton textname='E-posta' name='Eposta' nav={navigate} mySrc={require('../../src/images/main-letter.png')} />
+          <MainButton textname='Uzem' name='Uzem' nav={navigate} mySrc={require('../../src/images/main-uzem.png')} />
         </View>
       </ImageBackground>
     );

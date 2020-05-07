@@ -17,6 +17,7 @@ import ebys from './components/EBYSComponents/ebys'
 import AkilliKart from './components/AkilliKartComponent/AkilliKart'
 import Haberler from './components/HaberlerComponent/Haberler'
 import CustomComponent from './CustomDrawer/CustomDrawerComponent'
+import Uzem from './components/UzemComponent/Uzem'
 
 const DrawerNavigator = createDrawerNavigator({
     Anasayfa,
@@ -30,7 +31,8 @@ const DrawerNavigator = createDrawerNavigator({
     PersonelAra,
     ebys,
     AkilliKart,
-    Haberler
+    Haberler,
+    Uzem
 },{contentComponent:props=><CustomComponent {...props}/>}
 )
 export default createAppContainer(DrawerNavigator)
