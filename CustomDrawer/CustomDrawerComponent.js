@@ -68,7 +68,7 @@ export default class CustomComponent extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#c2e8ff'
+        backgroundColor: '#e8f8ff'
     },
     containerBottom: {
         marginTop: 5,
@@ -83,7 +83,8 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         color: 'black',
         fontSize: 15,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        fontFamily:'sans-serif-thin'
     },
     imageTopRow: {
         height: 100,

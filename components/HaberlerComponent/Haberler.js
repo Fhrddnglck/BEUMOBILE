@@ -7,6 +7,7 @@ import { Picker } from '@react-native-community/picker'
 
 var HTMLParser = require('fast-html-parser');
 let colors = ['#ffffff', '#c2e8ff'];
+const months = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık']
 export default class EtkinlikTakvimi extends React.Component {
     constructor(props) {
         super(props);
@@ -33,13 +34,58 @@ export default class EtkinlikTakvimi extends React.Component {
                 var d = new Date();
                 var m = d.getMonth() + 1;
                 var y = d.getFullYear();
-                this.getDatas(m, y);
+                this.getLastThreeMonth(m, y);
                 this.setState({
-                    isLoading: false
+                    selectedMonth : m,
+                    selectedYears : y
                 })
             }
             )
 
+    }
+    getLastThreeMonth = async (month,year) =>{
+        this.setState({isLoading:true})
+        this.state.details.length = 0;
+        this.state.datas.length = 0;
+        this.state.dates.length = 0;
+        var st,nd,styear,ndyear;
+        st = month-1;
+        styear = year;
+        nd = month-2;
+        ndyear = year;
+        if(st<=0){
+            st = 12 - st;
+            styear--;
+        }
+        if(nd<=0){
+            nd = 12 - nd;
+            ndyear--;
+        }
+        await fetch('https://w3.beun.edu.tr/arsiv/haberler/' + month + '/' + year + '/liste.html')
+        .then((res)=> res.text())
+        .then((html)=>{
+            var root = HTMLParser.parse(html);
+            root.querySelectorAll('a').forEach((value) => this.setState({ datas: [...this.state.datas, value.text] }))
+            root.querySelectorAll('.col-10').forEach((value) => this.setState({ dates: [...this.state.dates, value.text] }))
+            root.querySelectorAll('a').forEach((value) => this.setState({ details: [...this.state.details, 'https://w3.beun.edu.tr' + value.rawAttributes.href] }))
+        })
+        await fetch('https://w3.beun.edu.tr/arsiv/haberler/' + st + '/' + styear + '/liste.html')
+        .then((res)=> res.text())
+        .then((html)=>{
+            var root = HTMLParser.parse(html);
+            root.querySelectorAll('a').forEach((value) => this.setState({ datas: [...this.state.datas, value.text] }))
+            root.querySelectorAll('.col-10').forEach((value) => this.setState({ dates: [...this.state.dates, value.text] }))
+            root.querySelectorAll('a').forEach((value) => this.setState({ details: [...this.state.details, 'https://w3.beun.edu.tr' + value.rawAttributes.href] }))
+        })
+        await fetch('https://w3.beun.edu.tr/arsiv/haberler/' + nd + '/' + ndyear + '/liste.html')
+        .then((res)=> res.text())
+        .then((html)=>{
+            var root = HTMLParser.parse(html);
+            root.querySelectorAll('a').forEach((value) => this.setState({ datas: [...this.state.datas, value.text] }))
+            root.querySelectorAll('.col-10').forEach((value) => this.setState({ dates: [...this.state.dates, value.text] }))
+            root.querySelectorAll('a').forEach((value) => this.setState({ details: [...this.state.details, 'https://w3.beun.edu.tr' + value.rawAttributes.href] }))
+            this.setState({isLoading:false})
+        })
     }
 
     getDatas = (month, year) => {
@@ -87,6 +133,11 @@ export default class EtkinlikTakvimi extends React.Component {
             return (<Picker.Item key={i} value={x} label={x} />)
         }))
     }
+    _unitList_month = () => { //TODO REMOVE EMPTY ELEMENT IN ARRAY
+        return (months.map((x, i) => { //TODO YEARS LIST
+            return (<Picker.Item key={i+1} value={i+1} label={x} />)
+        }))
+    }
     ImageArray = () => {
         return (this.state.currentHrefs.map((value, i) => {
             return (<Image
@@ -119,24 +170,13 @@ export default class EtkinlikTakvimi extends React.Component {
                 <View style={{ alignSelf: 'center', alignItems: 'center' }}>
                     <Text style={{ fontSize: 15, fontWeight: 'bold', marginTop: 5 }}>TARİH SEÇ</Text>
                     <View style={{ flexDirection: 'row' }}>
-                        <Picker
-                            style={{ width: 150 }}
-                            mode="dropdown"
-                            selectedValue={this.state.selectedMonth}
-                            onValueChange={(Month) => this.setState({ selectedMonth: Month })}>
-                            <Picker.Item label="Ocak" value="1" key="1" />
-                            <Picker.Item label="Şubat" value="2" key="2" />
-                            <Picker.Item label="Mart" value="3" key="3" />
-                            <Picker.Item label="Nisan" value="4" key="4" />
-                            <Picker.Item label="Mayıs" value="5" key="5" />
-                            <Picker.Item label="Haziran" value="6" key="6" />
-                            <Picker.Item label="Temmuz" value="7" key="7" />
-                            <Picker.Item label="Ağustos" value="8" key="8" />
-                            <Picker.Item label="Eylül" value="9" key="9" />
-                            <Picker.Item label="Ekim" value="10" key="10" />
-                            <Picker.Item label="Kasım" value="11" key="11" />
-                            <Picker.Item label="Aralık" value="12" key="12" />
-                        </Picker>
+                    <Picker
+                        style={{ width: 150}}
+                        mode="dropdown"
+                        selectedValue={this.state.selectedMonth}
+                        onValueChange={(Month) => this.setState({ selectedMonth: Month })}>
+                        {this._unitList_month()}
+                    </Picker>
                         <Picker
                             style={{ width: 150 }}
                             mode="dropdown"
