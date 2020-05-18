@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, Image, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, ScrollView, Image, Linking,BackHandler } from 'react-native';
 import HeaderContent from '../HeaderContent/HeaderContent'
 import { FlatList } from 'react-native-gesture-handler';
 import CustomModel from '../CustomModel/CustomModel'
@@ -31,7 +31,11 @@ export default class Duyurular extends React.Component {
             exampleTextArray : [],
         }
     }
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.hand);
+      }
     componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.hand);
         return fetch('https://w3.beun.edu.tr/tum-duyurular.html')
             .then(res => res.text())
             .then(html => {
@@ -48,6 +52,9 @@ export default class Duyurular extends React.Component {
             }
             )
 
+    }
+    hand = () => {
+        console.log(this.props.navigation.state.routeName)
     }
     getLastThreeMonth = async (month, year) => {
         this.setState({ isLoading: true })
@@ -136,6 +143,7 @@ export default class Duyurular extends React.Component {
     }
 
     OpenModal(myIndex) {
+        this.setState({ isLoading: true })
         this.state.linkTexts.length = 0;
         this.state.linkHrefs.length = 0;
         this.state.exampleTextArray.length = 0;
@@ -181,14 +189,16 @@ export default class Duyurular extends React.Component {
                         })
                     } catch (e) {
                     }
+
                 })
                 yazim = yazim.replace(baslik, '')
                 this.setState({
                     currentText: yazim,
                     currentHeader: baslik
                 })
+                this.setState({ isLoading: false })
             })
-
+            
     }
     showModal = () => {
         this.setState({

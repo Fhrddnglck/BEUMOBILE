@@ -18,14 +18,16 @@ import AkilliKart from './components/AkilliKartComponent/AkilliKart'
 import Haberler from './components/HaberlerComponent/Haberler'
 import CustomComponent from './CustomDrawer/CustomDrawerComponent'
 import Uzem from './components/UzemComponent/Uzem'
+import Kutuphane from './components/KutuphaneComponent/Kutuphane'
 
 const DrawerNavigator = createDrawerNavigator({
     Anasayfa,
     YemekListesi,
     Duyurular,
     AkademikTakvim,
-    TelefonRehberi,
     EtkinlikTakvimi,
+    TelefonRehberi,
+    Kutuphane,
     Rimer,
     Eposta,
     PersonelAra,

@@ -54,6 +54,7 @@ export default class CustomComponent extends Component {
                     <MenuItem navName='AkilliKart' name='Akıllı Kart' Mysrc={require('../src/images/card-icon.png')} propsNav={navigate} />
                     <MenuItem navName='Uzem' name='Uzem' Mysrc={require('../src/images/uzem-icon.png')} propsNav={navigate} />
                     <MenuItem navName='Eposta' name='E-posta' Mysrc={require('../src/images/student-mail-icon.png')} propsNav={navigate} />
+                    <MenuItem navName='Kutuphane' name='Kutuphane' Mysrc={require('../src/images/library-icon.png')} propsNav={navigate} />
                     <MenuItem navName='TelefonRehberi' name='Telefon Rehberi' Mysrc={require('../src/images/phoneMain-icon.png')} propsNav={navigate} />
                     <MenuItem navName='PersonelAra' name='Personel Ara' Mysrc={require('../src/images/icon-search.png')} propsNav={navigate} />
                     <MenuItem navName='AkademikTakvim' name='Akademik Takvim' Mysrc={require('../src/images/calendar-icon.png')} propsNav={navigate} />

@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { Modal, View, Image, TouchableOpacity, Text,StyleSheet } from 'react-native'
+import { Modal, View, Image, TouchableOpacity, Text,StyleSheet,BackHandler } from 'react-native'
 
 export default class CustomModel extends React.Component {
     constructor(props) {
         super(props);
+        //this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     }
 
 
     onClose = () => {
+        console.log('basti')
         this.props.onClose() //ONCLOSE FUNCTION IN PROPS ONCLOSE
     };
 
@@ -20,6 +22,9 @@ export default class CustomModel extends React.Component {
             <Modal
                 animationType="slide"
                 transparent={false}
+                onRequestClose = {()=>{
+                    this.onClose()
+                }}
             >
                 <View style={{ display: 'flex', flexDirection: 'row' }}>
                     <Image

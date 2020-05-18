@@ -12,7 +12,6 @@ export default class Rimer extends React.Component {
       <View style={styles.container}>
         <HeaderContent navigation={this.props.navigation} />
         <WebView
-          renderLoading={true}
           source={{ uri: 'https://webapp.beun.edu.tr/iletisimformu/rimer' }}
           style={{ flex: 1, marginBottom: -160 }}
         />

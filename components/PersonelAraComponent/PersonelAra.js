@@ -28,35 +28,36 @@ export default class PersonelAra extends React.Component {
     this.setState({ modalVisible: visible });
   }
   _getDatas = (search) => {
-    deneme = [];
-    this.state.dataSource.length = 0; // array remove elements
-    myArray = [];
-    detail = [];
-    this.setState({
-      name: search
-    })
-    
-    return fetch('http://webapp.beun.edu.tr/namesearch?type=rehber&q=' + encodeURIComponent(this.state.name.toUpperCase().replace(/I/g,"İ")))
-      .then((res) => res.text())
-      .then((html) => {
-        var root = HTMLParser.parse(html);
-        root.querySelector('table').querySelector('tbody').querySelectorAll('td').forEach((value, index) => {
-          if (value.text.trim() == 'Özgeçmiş') {
-            //console.log(value.childNodes[0].rawAttributes.href + "///" + index);
-            detail.push(value.childNodes[0].rawAttributes.href);
-          }
-          deneme.push(value.text);
-        }) //TODO WILL BE CONTINUED
-        var newArrayIndex = 0;
-        for (var i = 0; i < deneme.length; i += 6) {
-          myArray[newArrayIndex] = deneme[i] + '\n' + deneme[i + 1] + '\n' + deneme[i + 2] + '\n' + deneme[i + 3] + '\n' + deneme[i + 4] + '\n';
-          newArrayIndex++;
-        }
-        this.setState({
-          dataSource: myArray
-        })
+    if(search.length>2 || search.length==0){
+      deneme = [];
+      this.state.dataSource.length = 0; // array remove elements
+      myArray = [];
+      detail = [];
+      this.setState({
+        name: search
       })
-
+      
+      return fetch('http://webapp.beun.edu.tr/namesearch?type=rehber&q=' + encodeURIComponent(this.state.name.toUpperCase().replace(/I/g,"İ")))
+        .then((res) => res.text())
+        .then((html) => {
+          var root = HTMLParser.parse(html);
+          root.querySelector('table').querySelector('tbody').querySelectorAll('td').forEach((value, index) => {
+            if (value.text.trim() == 'Özgeçmiş') {
+              //console.log(value.childNodes[0].rawAttributes.href + "///" + index);
+              detail.push(value.childNodes[0].rawAttributes.href);
+            }
+            deneme.push(value.text);
+          }) //TODO WILL BE CONTINUED
+          var newArrayIndex = 0;
+          for (var i = 0; i < deneme.length; i += 6) {
+            myArray[newArrayIndex] = deneme[i] + '\n' + deneme[i + 1] + '\n' + deneme[i + 2] + '\n' + deneme[i + 3] + '\n' + deneme[i + 4] + '\n';
+            newArrayIndex++;
+          }
+          this.setState({
+            dataSource: myArray
+          })
+        })
+    }
   }
   render() {
     return (

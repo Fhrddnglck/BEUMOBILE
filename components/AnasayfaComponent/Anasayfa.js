@@ -1,9 +1,37 @@
 import * as React from 'react';
-import { View, Text, ActivityIndicator, FlatList, TouchableOpacity, Image, StyleSheet, ImageBackground } from 'react-native';
+import { BackHandler, View, Text, ActivityIndicator, FlatList, Alert, TouchableOpacity, Image, StyleSheet, ImageBackground } from 'react-native';
 import HeaderContent from '../HeaderContent/HeaderContent'
 import { WebView } from 'react-native-webview'
 
+
+
 class MainButton extends React.Component {
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick = () => {
+    // console.log(this.props.navigation)
+    // if(this.props.navigation.state.routeName==='undefined'){
+    //   Alert.alert(
+    //     'Exit App',
+    //     'Exiting the application?', [{
+    //       text: 'Cancel',
+    //       onPress: () => console.log('Cancel Pressed'),
+    //       style: 'cancel'
+    //     }, {
+    //       text: 'OK',
+    //       onPress: () => BackHandler.exitApp()
+    //     },], {
+    //     cancelable: false
+    //   }
+    //   )
+    //   return true;
+    // }
+  }
   render() {
     return (
       <TouchableOpacity style={styles.buttons}
@@ -13,7 +41,7 @@ class MainButton extends React.Component {
           style={styles.buttonsImage}
           source={this.props.mySrc}
         />
-        <Text style={{fontFamily:'sans-serif-light',color:'#72a3f2',fontSize:12,marginTop:4}}>{this.props.textname}</Text>
+        <Text style={{ fontFamily: 'sans-serif-light', color: '#72a3f2', fontSize: 12, marginTop: 4 }}>{this.props.textname}</Text>
       </TouchableOpacity>
 
     )
@@ -42,7 +70,7 @@ export default class AnaEkran extends React.Component {
           <MainButton textname='Duyurular' name='Duyurular' nav={navigate} mySrc={require('../../src/images/main-anno.png')} />
           <MainButton textname='Telefon Rehberi' name='TelefonRehberi' nav={navigate} mySrc={require('../../src/images/main-phone.png')} />
           <MainButton textname='Akademik Takvim' name='AkademikTakvim' nav={navigate} mySrc={require('../../src/images/main-calen.png')} />
-          <MainButton textname='E-posta' name='Eposta' nav={navigate} mySrc={require('../../src/images/main-letter.png')} />
+          <MainButton textname='Kütüphane' name='Kutuphane' nav={navigate} mySrc={require('../../src/images/main-library.png')} />
           <MainButton textname='Uzem' name='Uzem' nav={navigate} mySrc={require('../../src/images/main-uzem.png')} />
         </View>
       </ImageBackground>
@@ -84,7 +112,7 @@ const styles = StyleSheet.create({
   },
   webViewStyle: {
     flex: 1,
-    width:'100%',
+    width: '100%',
     marginTop: -45,
     resizeMode: 'cover'
   },

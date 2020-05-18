@@ -142,7 +142,7 @@ export default class EtkinlikTakvimi extends React.Component {
         return (this.state.currentHrefs.map((value, i) => {
             return (<Image
                 key={i}
-                style={{ width: 75, height: 75 }}
+                style={{ width: 150, height: 150 }}
                 source={{ uri: value }}
             />)
         }))
