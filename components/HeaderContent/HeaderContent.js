@@ -25,11 +25,16 @@ export default class HeaderContent extends React.Component {
         })
         return (
             <View style={styles.headerNav}>
-                <Image
+                {/* <Image
                     style={{ width: 60, height: 60, marginLeft: 5, marginTop: 5 }}
                     source={require('../../src/images/beulogo-tabs.png')}
                 />
-                <Text style={{fontSize:25,marginLeft:'auto',alignSelf:'center',color:'#2e2322',textShadowColor:'black',textShadowOffset:{height:1},textShadowRadius:5}}>ZBEÜ<Text style={{fontSize:30,alignSelf:'center',fontWeight:'bold',color:'#72a3f2'}}>MOBİL</Text></Text>
+                <Text style={{fontSize:25,marginLeft:'auto',alignSelf:'center',color:'#2e2322',textShadowColor:'black',textShadowOffset:{height:1},textShadowRadius:5}}>ZBEÜ<Text style={{fontSize:30,alignSelf:'center',fontWeight:'bold',color:'#72a3f2'}}>MOBİL</Text></Text> */}
+                <Image
+                source = {require('../../src/images/headerr.jpeg')}
+                style={{width:'85%',height:60}}
+                resizeMode = 'contain'
+                />
                 <TouchableOpacity
                     style={{marginLeft: 'auto'}}
                     onPress={this.props.navigation.openDrawer}
@@ -52,7 +57,8 @@ export default class HeaderContent extends React.Component {
 const styles = StyleSheet.create({
     headerNav: {
         flexDirection: 'row',
-        backgroundColor:'#edf2f5',
+        //backgroundColor:'#edf2f5',
+        backgroundColor:'#F7F7F7',
         width: '100%',
         borderBottomLeftRadius:15,
         borderBottomRightRadius:15

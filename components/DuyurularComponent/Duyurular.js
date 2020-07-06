@@ -31,11 +31,12 @@ export default class Duyurular extends React.Component {
             exampleTextArray : [],
         }
     }
-    componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.hand);
-      }
+    // componentWillUnmount() {
+    //     BackHandler.removeEventListener('hardwareBackPress', this.hand);
+    //   }
     componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.hand);
+        // console.log(this.props.navigation.state.routeName)
+        // BackHandler.addEventListener('hardwareBackPress', this.hand);
         return fetch('https://w3.beun.edu.tr/tum-duyurular.html')
             .then(res => res.text())
             .then(html => {
@@ -53,9 +54,33 @@ export default class Duyurular extends React.Component {
             )
 
     }
-    hand = () => {
-        console.log(this.props.navigation.state.routeName)
-    }
+    // hand = () => {
+    //     console.log('--->'+this.props.navigation.state.routeName)
+    //     console.log('--->'+this.props.navigation.state.routeName)
+    //     console.log('--->'+this.props.navigation.state.routeName)
+    //     console.log('--->'+this.props.navigation.state.routeName)
+    //     console.log('--->'+this.props.navigation.state.routeName)
+    //     console.log('--->'+this.props.navigation.state.routeName)
+    //     console.log('--->'+this.props.navigation.state.routeName)
+    //     console.log('--->'+this.props.navigation.state.routeName)
+    //     if (this.props.navigation.state.routeName != 'Duyurular') {
+    //         console.log('->'+this.props.navigation.state.routeName)
+    //         Alert.alert(
+    //           'Exit App',
+    //           'Exiting the application?', [{
+    //             text: 'Cancel',
+    //             onPress: () => console.log('Cancel Pressed'),
+    //             style: 'cancel'
+    //           }, {
+    //             text: 'OK',
+    //             onPress: () => BackHandler.exitApp()
+    //           },], {
+    //           cancelable: false
+    //         }
+    //         )
+    //         return true;
+    //       }
+    // }
     getLastThreeMonth = async (month, year) => {
         this.setState({ isLoading: true })
         this.state.details.length = 0;

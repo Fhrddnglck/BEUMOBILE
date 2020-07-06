@@ -1,37 +1,11 @@
 import * as React from 'react';
-import { BackHandler, View, Text, ActivityIndicator, FlatList, Alert, TouchableOpacity, Image, StyleSheet, ImageBackground } from 'react-native';
+import { StatusBar,BackHandler, View, Text, ActivityIndicator, FlatList, Alert, TouchableOpacity, Image, StyleSheet, ImageBackground } from 'react-native';
 import HeaderContent from '../HeaderContent/HeaderContent'
 import { WebView } from 'react-native-webview'
 
 
 
 class MainButton extends React.Component {
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
-  }
-  componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-  }
-
-  handleBackButtonClick = () => {
-    // console.log(this.props.navigation)
-    // if(this.props.navigation.state.routeName==='undefined'){
-    //   Alert.alert(
-    //     'Exit App',
-    //     'Exiting the application?', [{
-    //       text: 'Cancel',
-    //       onPress: () => console.log('Cancel Pressed'),
-    //       style: 'cancel'
-    //     }, {
-    //       text: 'OK',
-    //       onPress: () => BackHandler.exitApp()
-    //     },], {
-    //     cancelable: false
-    //   }
-    //   )
-    //   return true;
-    // }
-  }
   render() {
     return (
       <TouchableOpacity style={styles.buttons}
@@ -48,8 +22,59 @@ class MainButton extends React.Component {
   }
 }
 
-export default class AnaEkran extends React.Component {
+export default class Anasayfa extends React.Component {
+  getNavigationParams() {
+    return this.props.navigation.state.params || {}
+  }
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+  componentDidMount() {
+    console.log(this.props.navigation.state.routeName)
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
 
+  handleBackButtonClick = () => {
+    if (this.props.navigation && this.props.navigation.goBack) {
+      if (!this.props.navigation.goBack(null)) {
+        Alert.alert(
+          'Uygulamadan çık',
+          'Çıkmak istiyor musunuz?', [{
+            text: 'İptal',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel'
+          }, {
+            text: 'Çık',
+            onPress: () => BackHandler.exitApp()
+          },], {
+          cancelable: false
+        }
+        )
+        return true;
+      } else {
+        this.props.navigation.goBack(null);
+        return true;
+      }
+    }
+    // else {
+    //   console.log('sadsadsadsads')
+    //   Alert.alert(
+    //     'Exit App',
+    //     'Exiting the application?', [{
+    //       text: 'Cancel',
+    //       onPress: () => console.log('Cancel Pressed'),
+    //       style: 'cancel'
+    //     }, {
+    //       text: 'OK',
+    //       onPress: () => BackHandler.exitApp()
+    //     },], {
+    //     cancelable: false
+    //   }
+    //   )
+    //   return true;
+
+    // }
+  }
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -57,6 +82,10 @@ export default class AnaEkran extends React.Component {
         style={{ flex: 1 }}
         source={require('../../src/images/beu-back-2.png')}
       >
+        <StatusBar
+        backgroundColor = '#F7F7F7'
+        barStyle = 'dark-content'
+        />
         <HeaderContent navigation={this.props.navigation} />
         {/* <View style={{ flex: 0.21, marginTop: 5, width: '90%', marginLeft: 16 }} pointerEvents='none'>
           <WebView

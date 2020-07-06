@@ -5,9 +5,9 @@ import {
     StyleSheet,
     Text,
     SafeAreaView,
-    BackHandler,
     View,
-    Dimensions
+    Dimensions,
+    ActivityIndicator
 } from 'react-native';
 import { WebView } from 'react-native-webview'
 import HeaderContent from '../HeaderContent/HeaderContent'
@@ -17,6 +17,7 @@ export default class Kutuphane extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            visible : true,
             canGoBack: false,
             refreshing: false,
             setRefreshing: false,
@@ -24,28 +25,16 @@ export default class Kutuphane extends React.Component {
         }
         this.WEBVİEW_REF = React.createRef(); //REFERANCE FOR WEBVİEW
     }
-    componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-    }
-
-    componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-    }
     onNavigationStateChange(navState) {
         console.log(navState.url)
-        this.setState({
-            canGoBack: navState.canGoBack,
-            uri : navState.url
-        });
-    }
-    handleBackPress = () => {
-        if (this.state.canGoBack) {
-            this.WEBVİEW_REF.current.goBack();
+        try{
+            this.setState({
+                canGoBack: navState.canGoBack,
+                uri : navState.url
+            });
+        }catch(e){
+            console.log(e)
         }
-        else {
-            this.props.navigation.goBack(null)
-        }
-        return true;
     }
     onRefresh = () => {
         
@@ -58,6 +47,14 @@ export default class Kutuphane extends React.Component {
         return (
             <View style={styles.container}>
                 <HeaderContent navigation={this.props.navigation} />
+                {this.state.visible 
+                ?
+                <ActivityIndicator
+                
+                />
+                :
+                null
+            }
                 <ScrollView
                     style={{flex:1}}
                     refreshControl={
@@ -68,6 +65,14 @@ export default class Kutuphane extends React.Component {
                         ref={this.WEBVİEW_REF}
                         source={{ uri: this.state.uri }}
                         style={{ height:height }}
+                        onError = {(e)=>alert('Page error')}
+                        renderError = {(e)=>alert('Page error')}
+                        onHttpError = {(e)=>alert('Page error')}
+                        onLoadStart  ={()=>this.setState({visible : true})}
+                        onLoadEnd = {()=>this.setState({visible: false})}
+                        allowFileAccess={true}
+                        scalesPageToFit={true}
+                        originWhitelist={['*']}
                         onNavigationStateChange={this.onNavigationStateChange.bind(this)}
                     />
                 </ScrollView>

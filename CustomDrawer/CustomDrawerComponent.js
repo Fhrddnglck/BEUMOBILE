@@ -59,7 +59,7 @@ export default class CustomComponent extends Component {
                     <MenuItem navName='PersonelAra' name='Personel Ara' Mysrc={require('../src/images/icon-search.png')} propsNav={navigate} />
                     <MenuItem navName='AkademikTakvim' name='Akademik Takvim' Mysrc={require('../src/images/calendar-icon.png')} propsNav={navigate} />
                     <MenuItem navName='ebys' name='Ebys' Mysrc={require('../src/images/ebys-icon.png')} propsNav={navigate} />
-                    <MenuItem navName='Rimer' name='Rimer' Mysrc={require('../src/images/rimer-icon.png')} propsNav={navigate} />
+                    {/* <MenuItem navName='Rimer' name='Rimer' Mysrc={require('../src/images/rimer-icon.png')} propsNav={navigate} /> */}
                 </ScrollView>
             </View>
         );
